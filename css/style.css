@@ -38,6 +38,7 @@ body {
     padding: 0;
     margin: 0;
     display: flex;
+    align-items: center;
     gap: 20px;
 }
 
@@ -398,4 +399,96 @@ section {
 /*paragraph animation*/
 [data-aos] {
     transition-property: opacity, transform;
+}
+
+/*css for donate button*/
+.donate-btn {
+    background-color: #ffcc00;
+    color: #003366;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.donate-btn:hover {
+    background-color: #ffaa00;
+    color: white;
+}
+
+ /*Donate page*/
+.donate-section {
+    padding: 60px 20px;
+    background: #f8f8f8;
+    text-align: center;
+}
+
+.donate-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    text-align: left;
+    display: inline-block;
+}
+
+.donate-section ul li {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.donate-section img {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+/* Whatsapp button */
+.whatsapp-nav {
+    background-color: #25D366;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.whatsapp-nav:hover {
+    background-color: #1ebd5a;
+    color: #fff;
+}
+
+.nav-links i.fab.fa-whatsapp {
+    font-size: 16px;
+}
+
+/*donation page whatsapp*/
+.donate-help {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.whatsapp-btn {
+    display: inline-block;
+    background-color: #25D366;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.whatsapp-btn i {
+    margin-right: 8px;
+}
+
+.whatsapp-btn:hover {
+    background-color: #1ebd5a;
 }
