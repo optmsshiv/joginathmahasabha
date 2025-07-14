@@ -15,11 +15,28 @@ body {
 }
 
 /* Navbar */
+/* Base style */
 .navbar {
-    background-color: #e3630d;
+    position: fixed;
+    top: -80px;
+    left: 0;
+    width: 100%;
+    background: #f36b10;
+    color: white;
+    z-index: 1000;
     padding: 10px 0;
+    transition: top 0.4s ease, opacity 0.4s ease;
+    opacity: 0;
 }
 
+/* Show navbar on scroll */
+.navbar.visible {
+    top: 0;
+    opacity: 1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Navbar container */
 .nav-container {
     display: flex;
     justify-content: space-between;
@@ -94,10 +111,10 @@ section {
 }
 
 .logo-img {
-    width: 120px;
+    width: 200px;
     height: auto;
     border-radius: 8px;
-    background: white;
+    background: rgba(255, 255, 255, 0);
     padding: 5px;
 }
 
@@ -358,6 +375,16 @@ section {
     margin: 0 auto 30px;
 }
 
+.section-titles {
+    background: #3ca41d;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: inline-block;
+   
+}
+
+
 .about-content {
     display: flex;
     gap: 40px;
@@ -422,8 +449,50 @@ section {
  /*Donate page*/
 .donate-section {
     padding: 60px 20px;
-    background: #f8f8f8;
     text-align: center;
+    color: rgb(89, 89, 89);
+    position: relative;
+    z-index: 1;
+}
+
+
+
+#particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    top: 0;
+    left: 0;
+}
+
+#textParticles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+    pointer-events: none;
+}
+
+.donate-wrapper::before {
+    content: "";
+    background: url('../images/logo.png') no-repeat center center;
+    background-size: 250px;
+    opacity: 0.08;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.donate-wrapper {
+    position: relative;
+    z-index: 1;
 }
 
 .donate-section ul {
@@ -491,4 +560,11 @@ section {
 
 .whatsapp-btn:hover {
     background-color: #1ebd5a;
+}
+
+/*sabha logo*/
+.donate-wrapper {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
 }
