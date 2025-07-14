@@ -26,7 +26,7 @@ class WordParticle {
 
   draw() {
     ctx.font = `${this.size}px serif`;
-    ctx.fillStyle = "rgba(255, 204, 0, 0.8)";
+    ctx.fillStyle = "rgba(255, 204, 0, 0.2)";
     ctx.fillText(this.text, this.x, this.y);
     ctx.globalCompositeOperation = "lighter";
   }
