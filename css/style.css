@@ -5,6 +5,8 @@ body {
     padding: 0;
     background: #f9f9f9;
     color: #333;
+    padding-top: 50px;
+        /* Match navbar height */
 }
 
 /* Container */
@@ -18,7 +20,7 @@ body {
 /* Base style */
 .navbar {
     position: fixed;
-    top: -80px;
+    top: 0;
     left: 0;
     width: 100%;
     background: #f36b10;
@@ -26,7 +28,7 @@ body {
     z-index: 1000;
     padding: 10px 0;
     transition: top 0.4s ease, opacity 0.4s ease;
-    opacity: 0;
+    
 }
 
 /* Show navbar on scroll */
