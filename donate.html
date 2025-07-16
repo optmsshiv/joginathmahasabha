@@ -10,6 +10,8 @@
     <!-- AOS Animation Library -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
 
 
 
@@ -21,7 +23,12 @@
     <nav class="navbar" id="mainNavbar">
         <div class="container nav-container">
             <h1 class="logo">Jogi/Nath MahaSabha</h1>
-            <ul class="nav-links">
+
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+
+            <ul class="nav-links" id="navLinks">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="events.html">Events</a></li>
                 <li><a href="gallery.html">Gallery</a></li>
@@ -145,10 +152,14 @@
             <p>&copy; 2025 Akhil Bharatvarshiya Jogi/Nath MahaSabha. All rights reserved.</p>
         </div>
     </footer>
+   
 
-
-    
-
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-logo">
+            <img src="images/logo.png" alt="Loading..." />
+        </div>
+    </div>
 
     <div id="particles-js"></div>
     <canvas id="textParticles"></canvas>
@@ -157,6 +168,11 @@
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="js/script.js"></script>
     <script src="js/particles.js"></script>
+    
+    <script src="js/navbar.js"></script>
+    <script src="js/hamburger.js"></script>
+    <script src="js/preloader.js"></script>
+    <script src="js/scroll_top.js"></script>
 
 
 </body>
