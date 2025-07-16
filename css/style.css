@@ -761,13 +761,18 @@ body {
     overflow-x: hidden;
 }
 
+
+
 /* Hamburger Menu */
+
 .hamburger {
     display: none;
     flex-direction: column;
     cursor: pointer;
     gap: 4px;
     transition: transform 0.3s ease;
+    margin-right: 10px;   /* ✅ Add this for spacing */
+    padding: 8px;        /* Optional: adds tap-friendly area */
 }
 
 .hamburger span {
@@ -797,6 +802,18 @@ body {
     .hamburger {
         display: flex;
     }
+
+        /*Mobile centre Logo*/
+        .logo-section {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    
+        /*end code*/
 
     .nav-links {
         position: absolute;
@@ -829,7 +846,7 @@ body {
           .nav-links li a {
               display: block;
               padding: 12px;
-              width: 80%;
+              width: 85%;
               font-size: 16px;
               color: white;
               text-decoration: none;
