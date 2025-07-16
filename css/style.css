@@ -6,7 +6,7 @@ body {
     background: #f9f9f9;
     color: #333;
     padding-top: 50px;
-        /* Match navbar height */
+    /* Match navbar height */
 }
 
 /* Container */
@@ -14,6 +14,8 @@ body {
     width: 90%;
     max-width: 1000px;
     margin: auto;
+    padding: 10px 0;
+    box-sizing: border-box;
 }
 
 /* Navbar */
@@ -27,7 +29,7 @@ body {
     color: white;
     z-index: 1000;
     transition: top 0.8s ease, opacity 0.5s ease;
-    
+
 }
 
 /* Show navbar on scroll */
@@ -170,11 +172,11 @@ section {
 
 .leader-img {
     position: relative;
-        flex: 1 px;
-        margin: 10px;
-        overflow: hidden;
-        border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    flex: 1 px;
+    margin: 10px;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .leader-img img {
@@ -184,6 +186,7 @@ section {
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
 }
+
 .leader-img:hover img {
     transform: scale(1.05);
 }
@@ -220,6 +223,7 @@ section {
     font-size: 14px;
     color: #ffcc00;
 }
+
 .leader-text p {
     font-size: 16px;
     color: #333;
@@ -238,9 +242,10 @@ section {
     .leader-text {
         padding: 20px 0 0;
     }
+
     .leader-overlay {
         font-size: 90%;
-     }
+    }
 }
 
 
@@ -382,7 +387,7 @@ section {
     padding: 10px 20px;
     border-radius: 8px;
     display: inline-block;
-   
+
 }
 
 
@@ -447,7 +452,7 @@ section {
     color: white;
 }
 
- /*Donate page
+/*Donate page
 .donate-section {
     padding: 60px 20px;
     text-align: center;
@@ -654,16 +659,12 @@ section {
 
 
 /*Mobile View*/
-
-.container {
-    width: 90%;
-    max-width: 1200px;
-    margin: auto;
-    padding: 20px 0;
-    box-sizing: border-box;
-}
-
 @media (max-width: 768px) {
+
+    body {
+        overflow-x: hidden;
+    }
+
     html {
         font-size: 15px;
     }
@@ -749,113 +750,105 @@ section {
     .navbar {
         padding: 10px 0;
     }
-}
 
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-}
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
 
-body {
-    overflow-x: hidden;
-}
+    /* Hamburger Menu */
 
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 4px;
+        transition: transform 0.3s ease;
+        margin-right: 10px;
+        /* ✅ Add this for spacing */
+        padding: 8px;
+        /* Optional: adds tap-friendly area */
+    }
 
+    .hamburger span {
+        width: 26px;
+        height: 3px;
+        background: white;
+        border-radius: 2px;
+        transition: background 0.3s ease, transform 0.3s ease;
+    }
 
-/* Hamburger Menu */
+    /* Animation when menu is open */
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
 
-.hamburger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-    gap: 4px;
-    transition: transform 0.3s ease;
-    margin-right: 10px;   /* ✅ Add this for spacing */
-    padding: 8px;        /* Optional: adds tap-friendly area */
-}
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
 
-.hamburger span {
-    width: 26px;
-    height: 3px;
-    background: white;
-    border-radius: 2px;
-    transition: background 0.3s ease, transform 0.3s ease;
-}
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
 
-/* Animation when menu is open */
-.hamburger.active span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-}
-
-.hamburger.active span:nth-child(2) {
-    opacity: 0;
-}
-
-.hamburger.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
-}
-
-
-/* Mobile menu style */
-@media (max-width: 768px) {
     .hamburger {
         display: flex;
     }
 
-        /*Mobile centre Logo*/
-        .logo-section {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-    
-        /*end code*/
+    /*Mobile centre Logo*/
+    .logo-section {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    /*end code*/
 
     .nav-links {
         position: absolute;
-            top: 60px;
-            /* Adjust based on navbar height */
-            left: 0;
-            width: 100%;
-            background: #003366;
-            flex-direction: column;
-            align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(-20px);
-            transition: all 0.3s ease;
-            z-index: 999;
+        top: 60px;
+        /* Adjust based on navbar height */
+        left: 0;
+        width: 100%;
+        background: #003366;
+        flex-direction: column;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-20px);
+        transition: all 0.3s ease;
+        z-index: 999;
     }
 
     .nav-links.show {
         opacity: 1;
-            pointer-events: auto;
-            transform: translateY(0);
+        pointer-events: auto;
+        transform: translateY(0);
     }
 
-          .nav-links li {
-              width: 90%;
-              text-align: center;
-              margin: 10px 0;
-          }
-    
-          .nav-links li a {
-              display: block;
-              padding: 12px;
-              width: 85%;
-              font-size: 16px;
-              color: white;
-              text-decoration: none;
-              border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-          }
-    
-          .nav-links li a:hover {
-              background-color: #004080;
-          }
+    .nav-links li {
+        width: 90%;
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    .nav-links li a {
+        display: block;
+        padding: 12px;
+        width: 85%;
+        font-size: 16px;
+        color: white;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-links li a:hover {
+        background-color: #004080;
+    }
 }
 
 /* Loader */
