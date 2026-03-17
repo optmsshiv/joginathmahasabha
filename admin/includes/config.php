@@ -5,9 +5,9 @@
 // ============================================
 
 define('DB_HOST',     'localhost');
-define('DB_NAME',     'joginath_db');
-define('DB_USER',     'root');        // ← change to your MySQL username
-define('DB_PASS',     '');            // ← change to your MySQL password
+define('DB_NAME',     'edrppymy_joginath');
+define('DB_USER',     'edrppymy_joginath');        // ← change to your MySQL username
+define('DB_PASS',     '123@Joginath');            // ← change to your MySQL password
 define('DB_CHARSET',  'utf8mb4');
 
 // Upload settings
