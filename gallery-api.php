@@ -1,38 +1,65 @@
 <?php
-// gallery-api.php — place this in your website root (same level as gallery.html)
-// Returns active gallery images as JSON for the public gallery page
+// ── Path to your admin config ──────────────
+require_once __DIR__ . '/admin/includes/config.php';
 
-require_once __DIR__ . '/admin/includes/config.php';  // adjust path if needed
-
-header('Content-Type: application/json');
+// ── CORS + JSON headers ────────────────────
+header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 
-$cat = $_GET['cat'] ?? '';
-$db  = getDB();
-
-$sql    = 'SELECT id, title, title_hindi, category, filename, description FROM gallery_images WHERE is_active=1';
-$params = [];
-
-if ($cat && in_array($cat, ['events','religious','meeting','community','awards'], true)) {
-    $sql .= ' AND category = ?';
-    $params[] = $cat;
+// ── Only GET requests allowed ──────────────
+if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    http_response_code(405);
+    echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+    exit;
 }
 
-$sql .= ' ORDER BY sort_order ASC, uploaded_at DESC';
-$stmt = $db->prepare($sql);
-$stmt->execute($params);
-$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// ── Sanitize category filter ───────────────
+$allowed = ['events', 'religious', 'meeting', 'community', 'awards'];
+$cat     = isset($_GET['cat']) && in_array($_GET['cat'], $allowed, true)
+           ? $_GET['cat']
+           : '';
 
-// Build response
-$images = array_map(function($row) {
-    return [
-        'id'          => (int) $row['id'],
-        'title'       => $row['title'],
-        'title_hindi' => $row['title_hindi'],
-        'category'    => $row['category'],
-        'src'         => 'uploads/gallery/' . $row['filename'],
-        'description' => $row['description'],
-    ];
-}, $rows);
+try {
+    $db  = getDB();
+    $sql = 'SELECT id, title, title_hindi, category, filename, description
+            FROM gallery_images
+            WHERE is_active = 1';
+    $params = [];
 
-echo json_encode(['success' => true, 'images' => $images]);
+    if ($cat) {
+        $sql     .= ' AND category = ?';
+        $params[] = $cat;
+    }
+
+    $sql .= ' ORDER BY sort_order ASC, uploaded_at DESC';
+
+    $stmt = $db->prepare($sql);
+    $stmt->execute($params);
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Build image list with correct public URL path
+    $images = array_map(function ($row) {
+        return [
+            'id'          => (int) $row['id'],
+            'title'       => $row['title'],
+            'title_hindi' => $row['title_hindi'],
+            'category'    => $row['category'],
+            'description' => $row['description'],
+            // Public URL path — adjust if your admin folder is named differently
+            'src'         => 'admin/uploads/gallery/' . $row['filename'],
+        ];
+    }, $rows);
+
+    echo json_encode([
+        'success' => true,
+        'total'   => count($images),
+        'images'  => $images,
+    ]);
+
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Database error',
+    ]);
+}
