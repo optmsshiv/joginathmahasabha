@@ -4,66 +4,342 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Page Under Development</title>
+    <title>Gallery — Akhil Bharatvarshiya Jogi/Nath MahaSabha</title>
     <link rel="stylesheet" href="css/style.css" />
-    <style>
-        body {
-            background: #f0f4f8;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-        }
-
-        .under-dev-box {
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            width: 90%;
-        }
-
-        .under-dev-box h1 {
-            font-size: 32px;
-            color: #003366;
-            margin-bottom: 20px;
-        }
-
-        .under-dev-box p {
-            font-size: 18px;
-            color: #555;
-        }
-
-        .under-dev-box a {
-            display: inline-block;
-            margin-top: 25px;
-            background: #ff6600;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background 0.3s ease;
-        }
-
-        .under-dev-box a:hover {
-            background: #cc5200;
-        }
-    </style>
+    <link rel="stylesheet" href="css/gallery.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
 
-    <div class="under-dev-box">
-        <h1>🚧 Page Under Development</h1>
-        <p>This section of the Akhil Bharatvarshiya Jogi/Nath MahaSabha website is currently under construction.</p>
-        <p>Please check back soon!</p>
-        <a href="index.html">← Back to Home</a>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-logo">
+            <img src="images/logo.png" alt="Loading..." />
+        </div>
     </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="mainNavbar">
+        <div class="container nav-container">
+            <h1 class="logo">Jogi/Nath MahaSabha</h1>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="donate.html" class="donate-btn"><i class="fas fa-heart"></i> Donate Now</a></li>
+                <li>
+                    <a href="https://wa.me/918059872950?text=Hello%20Jogi%20Mahasabha%2C%20I%20need%20help"
+                        target="_blank" class="whatsapp-nav">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Gallery Hero -->
+    <section class="gallery-hero">
+        <div class="gallery-hero-badge">Our Memories &amp; Moments</div>
+        <h1>Community <span>Gallery</span></h1>
+        <p>Glimpses of our events, programs, and celebrations — a visual journey of unity and tradition.</p>
+    </section>
+
+    <!-- Stats Strip -->
+    <div class="gallery-stats">
+        <div class="stat-item">
+            <strong id="totalCount">0</strong>
+            <span>Photos</span>
+        </div>
+        <div class="stat-item">
+            <strong>5</strong>
+            <span>Categories</span>
+        </div>
+        <div class="stat-item">
+            <strong>2024–25</strong>
+            <span>Years Covered</span>
+        </div>
+    </div>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all">All Photos</button>
+            <button class="filter-btn" data-filter="events">Events / कार्यक्रम</button>
+            <button class="filter-btn" data-filter="religious">Religious / धार्मिक</button>
+            <button class="filter-btn" data-filter="meeting">Meetings / बैठक</button>
+            <button class="filter-btn" data-filter="community">Community / समाज</button>
+            <button class="filter-btn" data-filter="awards">Awards / सम्मान</button>
+        </div>
+
+        <!-- Grid -->
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Items injected by JS -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="gallery-empty" id="galleryEmpty">
+            <p>No photos found in this category yet.</p>
+        </div>
+
+    </section>
+
+    <!-- Upload Notice -->
+    <div class="upload-notice">
+        <h3>📸 Share Your Moments</h3>
+        <p>Do you have photos from our events or community gatherings? Share them with us and we'll feature them in our
+            gallery.</p>
+        <a href="https://wa.me/918059872950?text=Hello%2C%20I%20want%20to%20share%20photos%20for%20the%20gallery"
+            target="_blank">
+            <i class="fab fa-whatsapp"></i> &nbsp;Send Photos on WhatsApp
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-about">
+                <h4>About Sabha / महासभा के बारे में</h4>
+                <p>Akhil Bharatvarshiya Jogi/Nath MahaSabha is a national-level initiative for unity, culture, and
+                    upliftment of the Jogi/Joginath community.<br><br>अखिल भारतवर्षीय जोगी/नाथ महासभा का उद्देश्य समाज
+                    की एकता, सांस्कृतिक पहचान और सामाजिक विकास को बढ़ावा देना है।</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p>Main Office:<br>VPO- Bawwa, Rewari, Haryana-123303</p>
+                <p>Phone: <a href="tel:01259297881">01259-297881</a>, <a href="tel:8059872950">8059872950</a></p>
+                <p>Email: <a href="mailto:info@joginathmahasabha.in">info@joginathmahasabha.in</a></p>
+                <div class="social-icons">
+                    <a href="#" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Akhil Bharatvarshiya Jogi/Nath MahaSabha. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div class="lightbox-overlay" id="lightbox">
+        <div class="lightbox-box">
+            <button class="lightbox-close" id="lbClose"><i class="fas fa-times"></i></button>
+            <button class="lightbox-nav lightbox-prev" id="lbPrev"><i class="fas fa-chevron-left"></i></button>
+            <button class="lightbox-nav lightbox-next" id="lbNext"><i class="fas fa-chevron-right"></i></button>
+            <img id="lbImg" src="" alt="" style="display:none">
+            <div class="lb-placeholder" id="lbPlaceholder"></div>
+            <div class="lightbox-caption">
+                <h3 id="lbTitle"></h3>
+                <p id="lbTag"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top -->
+    <a href="#" id="scrollToTopBtn"><i class="fas fa-arrow-up"></i></a>
+
+    <!-- Floating buttons (mobile) -->
+    <a href="donate.html" class="floating-donate" title="Donate"><i class="fas fa-hand-holding-heart"></i></a>
+    <a href="https://wa.me/918059872950" target="_blank" class="floating-whatsapp" title="WhatsApp"><i
+            class="fab fa-whatsapp"></i></a>
+
+    <script src="js/navbar.js"></script>
+    <script src="js/hamburger.js"></script>
+    <script src="js/preloader.js"></script>
+    <script src="js/scroll_top.js"></script>
+
+    <script>
+        /* ════════════════════════════════════
+           GALLERY DATA
+           Replace `src` with real image paths like "images/gallery/event1.jpg"
+           Heights in the placeholder are for visual variety in masonry
+        ════════════════════════════════════ */
+        const galleryData = [
+            { id: 1, src: "", title: "Annual Mahasabha 2024", tag: "events", icon: "🪔", h: 260 },
+            { id: 2, src: "", title: "Hawan Ceremony", tag: "religious", icon: "🔥", h: 200 },
+            { id: 3, src: "", title: "Community Gathering", tag: "community", icon: "🙏", h: 300 },
+            { id: 4, src: "", title: "Nath Tradition Program", tag: "religious", icon: "🕉️", h: 220 },
+            { id: 5, src: "", title: "Leadership Meeting 2024", tag: "meeting", icon: "📋", h: 180 },
+            { id: 6, src: "", title: "Cultural Event – Rewari", tag: "events", icon: "🎶", h: 280 },
+            { id: 7, src: "", title: "Samman Samaroh", tag: "awards", icon: "🏅", h: 240 },
+            { id: 8, src: "", title: "Youth Program 2024", tag: "community", icon: "👥", h: 200 },
+            { id: 9, src: "", title: "Puja at Main Office", tag: "religious", icon: "🪔", h: 260 },
+            { id: 10, src: "", title: "State Convention", tag: "meeting", icon: "🗣️", h: 220 },
+            { id: 11, src: "", title: "Flag Hoisting – Republic Day", tag: "events", icon: "🇮🇳", h: 180 },
+            { id: 12, src: "", title: "Senior Leader Felicitation", tag: "awards", icon: "🎖️", h: 260 },
+            { id: 13, src: "", title: "Bhandara – Community Feast", tag: "community", icon: "🍛", h: 200 },
+            { id: 14, src: "", title: "Devotional Sabha", tag: "religious", icon: "🙏", h: 300 },
+            { id: 15, src: "", title: "District Level Meeting", tag: "meeting", icon: "📌", h: 220 },
+            { id: 16, src: "", title: "Cultural Dance Program", tag: "events", icon: "💃", h: 240 },
+            { id: 17, src: "", title: "Best Member Award 2024", tag: "awards", icon: "🏆", h: 200 },
+            { id: 18, src: "", title: "Village Outreach Drive", tag: "community", icon: "🏘️", h: 260 },
+        ];
+
+        /* ── Category label map ── */
+        const tagLabels = {
+            events: "Events / कार्यक्रम",
+            religious: "Religious / धार्मिक",
+            meeting: "Meetings / बैठक",
+            community: "Community / समाज",
+            awards: "Awards / सम्मान",
+        };
+
+        /* ── Gradient palettes per category ── */
+        const tagColors = {
+            events: ["#F5E6C8", "#EDD5A8"],
+            religious: ["#F7E8D0", "#EACDA3"],
+            meeting: ["#E8EDF5", "#C8D5E8"],
+            community: ["#E8F5E8", "#C8E5C8"],
+            awards: ["#F5F0E0", "#EAE0C0"],
+        };
+
+        /* ── Render grid ── */
+        const grid = document.getElementById('galleryGrid');
+        const emptyMsg = document.getElementById('galleryEmpty');
+
+        function renderItems(filter) {
+            grid.innerHTML = '';
+            const items = filter === 'all' ? galleryData : galleryData.filter(i => i.tag === filter);
+
+            if (items.length === 0) {
+                emptyMsg.style.display = 'block';
+                return;
+            }
+            emptyMsg.style.display = 'none';
+
+            items.forEach((item, idx) => {
+                const colors = tagColors[item.tag] || ["#F5E6C8", "#EDD5A8"];
+                const div = document.createElement('div');
+                div.className = 'gallery-item';
+                div.style.animationDelay = (idx * 0.05) + 's';
+                div.dataset.id = item.id;
+
+                if (item.src) {
+                    div.innerHTML = `
+                    <img src="${item.src}" alt="${item.title}" loading="lazy">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-zoom"><i class="fas fa-expand"></i></div>
+                        <div class="gallery-overlay-title">${item.title}</div>
+                        <div class="gallery-overlay-tag">${tagLabels[item.tag] || item.tag}</div>
+                    </div>`;
+                } else {
+                    div.innerHTML = `
+                    <div class="img-placeholder" style="height:${item.h}px; background: linear-gradient(135deg, ${colors[0]} 0%, ${colors[1]} 100%);" data-icon="${item.icon}">
+                        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;opacity:0.35;">
+                            <div style="font-size:42px;line-height:1;">${item.icon}</div>
+                            <div style="font-size:11px;color:#7A6550;margin-top:8px;font-family:'DM Sans',sans-serif;letter-spacing:0.05em;">Add Image</div>
+                        </div>
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-zoom"><i class="fas fa-expand"></i></div>
+                        <div class="gallery-overlay-title">${item.title}</div>
+                        <div class="gallery-overlay-tag">${tagLabels[item.tag] || item.tag}</div>
+                    </div>`;
+                }
+
+                div.addEventListener('click', () => openLightbox(item.id, filter));
+                grid.appendChild(div);
+            });
+
+            document.getElementById('totalCount').textContent = galleryData.length;
+        }
+
+        /* ── Filter logic ── */
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderItems(btn.dataset.filter);
+            });
+        });
+
+        /* ── Lightbox ── */
+        let currentIndex = 0;
+        let currentList = [];
+
+        function openLightbox(id, filter) {
+            currentList = filter === 'all' ? galleryData : galleryData.filter(i => i.tag === filter);
+            currentIndex = currentList.findIndex(i => i.id === id);
+            showLightboxItem();
+            document.getElementById('lightbox').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function showLightboxItem() {
+            const item = currentList[currentIndex];
+            const lbImg = document.getElementById('lbImg');
+            const lbPh = document.getElementById('lbPlaceholder');
+
+            document.getElementById('lbTitle').textContent = item.title;
+            document.getElementById('lbTag').textContent = tagLabels[item.tag] || item.tag;
+
+            if (item.src) {
+                lbImg.src = item.src;
+                lbImg.alt = item.title;
+                lbImg.style.display = 'block';
+                lbPh.style.display = 'none';
+            } else {
+                lbImg.style.display = 'none';
+                lbPh.style.display = 'flex';
+                lbPh.innerHTML = `<span style="font-size:64px;opacity:0.35;">${item.icon}</span>`;
+                const colors = tagColors[item.tag] || ["#F5E6C8", "#EDD5A8"];
+                lbPh.style.background = `linear-gradient(135deg, ${colors[0]} 0%, ${colors[1]} 100%)`;
+            }
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('lbClose').addEventListener('click', closeLightbox);
+        document.getElementById('lightbox').addEventListener('click', e => {
+            if (e.target === document.getElementById('lightbox')) closeLightbox();
+        });
+
+        document.getElementById('lbPrev').addEventListener('click', e => {
+            e.stopPropagation();
+            currentIndex = (currentIndex - 1 + currentList.length) % currentList.length;
+            showLightboxItem();
+        });
+
+        document.getElementById('lbNext').addEventListener('click', e => {
+            e.stopPropagation();
+            currentIndex = (currentIndex + 1) % currentList.length;
+            showLightboxItem();
+        });
+
+        /* Keyboard navigation */
+        document.addEventListener('keydown', e => {
+            if (!document.getElementById('lightbox').classList.contains('open')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') { currentIndex = (currentIndex - 1 + currentList.length) % currentList.length; showLightboxItem(); }
+            if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % currentList.length; showLightboxItem(); }
+        });
+
+        /* ── Init ── */
+        renderItems('all');
+    </script>
 
 </body>
 
