@@ -56,7 +56,7 @@
     <!-- Stats Strip -->
     <div class="gallery-stats">
         <div class="stat-item">
-            <strong id="totalCount">0</strong>
+            <strong id="totalCount">—</strong>
             <span>Photos</span>
         </div>
         <div class="stat-item">
@@ -82,14 +82,29 @@
             <button class="filter-btn" data-filter="awards">Awards / सम्मान</button>
         </div>
 
-        <!-- Grid -->
-        <div class="gallery-grid" id="galleryGrid">
-            <!-- Items injected by JS -->
+        <!-- Loading State -->
+        <div id="galleryLoader">
+            <div class="spinner"></div>
+            <p style="margin-top:14px; color:#9E8870; font-size:14px; font-family:'DM Sans',sans-serif;">Loading
+                photos...</p>
         </div>
+
+        <!-- Grid -->
+        <div class="gallery-grid" id="galleryGrid" style="display:none;"></div>
 
         <!-- Empty State -->
         <div class="gallery-empty" id="galleryEmpty">
+            <i class="fas fa-images" style="font-size:40px; color:#EDE0CC; display:block; margin-bottom:14px;"></i>
             <p>No photos found in this category yet.</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="galleryError">
+            <i class="fas fa-exclamation-circle"
+                style="font-size:36px; color:#F4A14A; display:block; margin-bottom:12px;"></i>
+            <p style="color:#9E8870; font-size:15px; font-family:'DM Sans',sans-serif;">Could not load photos. Please
+                try again.</p>
+            <button class="retry-btn" id="retryBtn"><i class="fas fa-redo"></i> Retry</button>
         </div>
 
     </section>
@@ -146,8 +161,8 @@
             <button class="lightbox-close" id="lbClose"><i class="fas fa-times"></i></button>
             <button class="lightbox-nav lightbox-prev" id="lbPrev"><i class="fas fa-chevron-left"></i></button>
             <button class="lightbox-nav lightbox-next" id="lbNext"><i class="fas fa-chevron-right"></i></button>
-            <img id="lbImg" src="" alt="" style="display:none">
-            <div class="lb-placeholder" id="lbPlaceholder"></div>
+            <img id="lbImg" src="" alt="" style="display:none;">
+            <div id="lbPlaceholder"></div>
             <div class="lightbox-caption">
                 <h3 id="lbTitle"></h3>
                 <p id="lbTag"></p>
@@ -160,8 +175,9 @@
 
     <!-- Floating buttons (mobile) -->
     <a href="donate.html" class="floating-donate" title="Donate"><i class="fas fa-hand-holding-heart"></i></a>
-    <a href="https://wa.me/918059872950" target="_blank" class="floating-whatsapp" title="WhatsApp"><i
-            class="fab fa-whatsapp"></i></a>
+    <a href="https://wa.me/918059872950" target="_blank" class="floating-whatsapp" title="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
     <script src="js/navbar.js"></script>
     <script src="js/hamburger.js"></script>
@@ -169,117 +185,151 @@
     <script src="js/scroll_top.js"></script>
 
     <script>
-        /* ════════════════════════════════════
-           GALLERY DATA
-           Replace `src` with real image paths like "images/gallery/event1.jpg"
-           Heights in the placeholder are for visual variety in masonry
-        ════════════════════════════════════ */
-        const galleryData = [
-            { id: 1, src: "", title: "Annual Mahasabha 2024", tag: "events", icon: "🪔", h: 260 },
-            { id: 2, src: "", title: "Hawan Ceremony", tag: "religious", icon: "🔥", h: 200 },
-            { id: 3, src: "", title: "Community Gathering", tag: "community", icon: "🙏", h: 300 },
-            { id: 4, src: "", title: "Nath Tradition Program", tag: "religious", icon: "🕉️", h: 220 },
-            { id: 5, src: "", title: "Leadership Meeting 2024", tag: "meeting", icon: "📋", h: 180 },
-            { id: 6, src: "", title: "Cultural Event – Rewari", tag: "events", icon: "🎶", h: 280 },
-            { id: 7, src: "", title: "Samman Samaroh", tag: "awards", icon: "🏅", h: 240 },
-            { id: 8, src: "", title: "Youth Program 2024", tag: "community", icon: "👥", h: 200 },
-            { id: 9, src: "", title: "Puja at Main Office", tag: "religious", icon: "🪔", h: 260 },
-            { id: 10, src: "", title: "State Convention", tag: "meeting", icon: "🗣️", h: 220 },
-            { id: 11, src: "", title: "Flag Hoisting – Republic Day", tag: "events", icon: "🇮🇳", h: 180 },
-            { id: 12, src: "", title: "Senior Leader Felicitation", tag: "awards", icon: "🎖️", h: 260 },
-            { id: 13, src: "", title: "Bhandara – Community Feast", tag: "community", icon: "🍛", h: 200 },
-            { id: 14, src: "", title: "Devotional Sabha", tag: "religious", icon: "🙏", h: 300 },
-            { id: 15, src: "", title: "District Level Meeting", tag: "meeting", icon: "📌", h: 220 },
-            { id: 16, src: "", title: "Cultural Dance Program", tag: "events", icon: "💃", h: 240 },
-            { id: 17, src: "", title: "Best Member Award 2024", tag: "awards", icon: "🏆", h: 200 },
-            { id: 18, src: "", title: "Village Outreach Drive", tag: "community", icon: "🏘️", h: 260 },
-        ];
+        /* ══════════════════════════════════════════
+           CONFIG
+           gallery-api.php must be in the same folder
+           as this gallery.html file
+        ══════════════════════════════════════════ */
+        const API_URL = 'gallery-api.php';
 
-        /* ── Category label map ── */
+        /* ── Category labels ── */
         const tagLabels = {
-            events: "Events / कार्यक्रम",
-            religious: "Religious / धार्मिक",
-            meeting: "Meetings / बैठक",
-            community: "Community / समाज",
-            awards: "Awards / सम्मान",
+            events: 'Events / कार्यक्रम',
+            religious: 'Religious / धार्मिक',
+            meeting: 'Meetings / बैठक',
+            community: 'Community / समाज',
+            awards: 'Awards / सम्मान',
         };
 
-        /* ── Gradient palettes per category ── */
-        const tagColors = {
-            events: ["#F5E6C8", "#EDD5A8"],
-            religious: ["#F7E8D0", "#EACDA3"],
-            meeting: ["#E8EDF5", "#C8D5E8"],
-            community: ["#E8F5E8", "#C8E5C8"],
-            awards: ["#F5F0E0", "#EAE0C0"],
-        };
+        /* ── State ── */
+        let activeFilter = 'all';
+        let currentList = [];
+        let currentIndex = 0;
+        const cache = {};   // avoids re-fetching same category
 
-        /* ── Render grid ── */
+        /* ── DOM refs ── */
         const grid = document.getElementById('galleryGrid');
         const emptyMsg = document.getElementById('galleryEmpty');
+        const errorDiv = document.getElementById('galleryError');
+        const loaderDiv = document.getElementById('galleryLoader');
+        const totalCount = document.getElementById('totalCount');
 
-        function renderItems(filter) {
-            grid.innerHTML = '';
-            const items = filter === 'all' ? galleryData : galleryData.filter(i => i.tag === filter);
-
-            if (items.length === 0) {
-                emptyMsg.style.display = 'block';
-                return;
-            }
-            emptyMsg.style.display = 'none';
-
-            items.forEach((item, idx) => {
-                const colors = tagColors[item.tag] || ["#F5E6C8", "#EDD5A8"];
-                const div = document.createElement('div');
-                div.className = 'gallery-item';
-                div.style.animationDelay = (idx * 0.05) + 's';
-                div.dataset.id = item.id;
-
-                if (item.src) {
-                    div.innerHTML = `
-                    <img src="${item.src}" alt="${item.title}" loading="lazy">
-                    <div class="gallery-overlay">
-                        <div class="gallery-overlay-zoom"><i class="fas fa-expand"></i></div>
-                        <div class="gallery-overlay-title">${item.title}</div>
-                        <div class="gallery-overlay-tag">${tagLabels[item.tag] || item.tag}</div>
-                    </div>`;
-                } else {
-                    div.innerHTML = `
-                    <div class="img-placeholder" style="height:${item.h}px; background: linear-gradient(135deg, ${colors[0]} 0%, ${colors[1]} 100%);" data-icon="${item.icon}">
-                        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;opacity:0.35;">
-                            <div style="font-size:42px;line-height:1;">${item.icon}</div>
-                            <div style="font-size:11px;color:#7A6550;margin-top:8px;font-family:'DM Sans',sans-serif;letter-spacing:0.05em;">Add Image</div>
-                        </div>
-                    </div>
-                    <div class="gallery-overlay">
-                        <div class="gallery-overlay-zoom"><i class="fas fa-expand"></i></div>
-                        <div class="gallery-overlay-title">${item.title}</div>
-                        <div class="gallery-overlay-tag">${tagLabels[item.tag] || item.tag}</div>
-                    </div>`;
-                }
-
-                div.addEventListener('click', () => openLightbox(item.id, filter));
-                grid.appendChild(div);
+        /* ── Show/hide helpers ── */
+        function showOnly(el) {
+            [grid, emptyMsg, errorDiv, loaderDiv].forEach(e => {
+                e.style.display = (e === el) ? (e === grid ? 'block' : 'block') : 'none';
             });
-
-            document.getElementById('totalCount').textContent = galleryData.length;
         }
 
-        /* ── Filter logic ── */
+        /* ══════════════════════════════════════════
+           FETCH FROM PHP API
+        ══════════════════════════════════════════ */
+        async function fetchGallery(filter) {
+            activeFilter = filter;
+            showOnly(loaderDiv);
+
+            /* Return from cache instantly */
+            if (cache[filter]) {
+                renderItems(cache[filter]);
+                return;
+            }
+
+            try {
+                const param = (filter === 'all') ? '' : `?cat=${encodeURIComponent(filter)}`;
+                const res = await fetch(API_URL + param);
+
+                if (!res.ok) throw new Error('Server returned ' + res.status);
+
+                const data = await res.json();
+                if (!data.success) throw new Error('API returned error');
+
+                cache[filter] = data.images;   // store in cache
+                renderItems(data.images);
+
+            } catch (err) {
+                console.error('Gallery error:', err);
+                showOnly(errorDiv);
+            }
+        }
+
+        /* ══════════════════════════════════════════
+           RENDER GRID
+        ══════════════════════════════════════════ */
+        function renderItems(images) {
+            grid.innerHTML = '';
+            currentList = images;
+
+            /* Update total count from 'all' cache */
+            if (cache['all']) totalCount.textContent = cache['all'].length;
+            else if (activeFilter === 'all') totalCount.textContent = images.length;
+
+            if (images.length === 0) {
+                showOnly(emptyMsg);
+                return;
+            }
+
+            showOnly(grid);
+
+            images.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = 'gallery-item';
+                div.style.animationDelay = (idx * 0.04) + 's';
+
+                /*
+                 * item.src  — relative path returned by gallery-api.php
+                 *             e.g. "admin/uploads/gallery/img_abc123.jpg"
+                 * item.title, item.category, item.title_hindi, item.description
+                 */
+                div.innerHTML = `
+                <img
+                    src="${esc(item.src)}"
+                    alt="${esc(item.title)}"
+                    loading="lazy"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                >
+                <div class="img-fallback"
+                     style="display:none;align-items:center;justify-content:center;
+                            background:linear-gradient(135deg,#F5E6C8,#EDD5A8);min-height:180px;">
+                    <i class="fas fa-image" style="font-size:32px;color:#9E8870;"></i>
+                </div>
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-zoom"><i class="fas fa-expand"></i></div>
+                    <div class="gallery-overlay-title">${esc(item.title)}</div>
+                    <div class="gallery-overlay-tag">${esc(tagLabels[item.category] || item.category)}</div>
+                </div>
+            `;
+
+                div.addEventListener('click', () => openLightbox(idx));
+                grid.appendChild(div);
+            });
+        }
+
+        /* ── XSS-safe escape ── */
+        function esc(str) {
+            const d = document.createElement('div');
+            d.appendChild(document.createTextNode(str || ''));
+            return d.innerHTML;
+        }
+
+        /* ══════════════════════════════════════════
+           FILTER BUTTONS
+        ══════════════════════════════════════════ */
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                renderItems(btn.dataset.filter);
+                fetchGallery(btn.dataset.filter);
             });
         });
 
-        /* ── Lightbox ── */
-        let currentIndex = 0;
-        let currentList = [];
+        /* Retry button */
+        document.getElementById('retryBtn').addEventListener('click', () => fetchGallery(activeFilter));
 
-        function openLightbox(id, filter) {
-            currentList = filter === 'all' ? galleryData : galleryData.filter(i => i.tag === filter);
-            currentIndex = currentList.findIndex(i => i.id === id);
+        /* ══════════════════════════════════════════
+           LIGHTBOX
+        ══════════════════════════════════════════ */
+        function openLightbox(index) {
+            currentIndex = index;
             showLightboxItem();
             document.getElementById('lightbox').classList.add('open');
             document.body.style.overflow = 'hidden';
@@ -291,20 +341,24 @@
             const lbPh = document.getElementById('lbPlaceholder');
 
             document.getElementById('lbTitle').textContent = item.title;
-            document.getElementById('lbTag').textContent = tagLabels[item.tag] || item.tag;
+            document.getElementById('lbTag').textContent = tagLabels[item.category] || item.category;
 
-            if (item.src) {
+            /* Show spinner while image loads */
+            lbImg.style.display = 'none';
+            lbPh.style.display = 'flex';
+            lbPh.innerHTML = '<div class="spinner"></div>';
+
+            const tmp = new Image();
+            tmp.onload = () => {
                 lbImg.src = item.src;
                 lbImg.alt = item.title;
                 lbImg.style.display = 'block';
                 lbPh.style.display = 'none';
-            } else {
-                lbImg.style.display = 'none';
-                lbPh.style.display = 'flex';
-                lbPh.innerHTML = `<span style="font-size:64px;opacity:0.35;">${item.icon}</span>`;
-                const colors = tagColors[item.tag] || ["#F5E6C8", "#EDD5A8"];
-                lbPh.style.background = `linear-gradient(135deg, ${colors[0]} 0%, ${colors[1]} 100%)`;
-            }
+            };
+            tmp.onerror = () => {
+                lbPh.innerHTML = '<i class="fas fa-image" style="font-size:48px;color:#9E8870;opacity:0.4"></i>';
+            };
+            tmp.src = item.src;
         }
 
         function closeLightbox() {
@@ -316,20 +370,16 @@
         document.getElementById('lightbox').addEventListener('click', e => {
             if (e.target === document.getElementById('lightbox')) closeLightbox();
         });
-
         document.getElementById('lbPrev').addEventListener('click', e => {
             e.stopPropagation();
             currentIndex = (currentIndex - 1 + currentList.length) % currentList.length;
             showLightboxItem();
         });
-
         document.getElementById('lbNext').addEventListener('click', e => {
             e.stopPropagation();
             currentIndex = (currentIndex + 1) % currentList.length;
             showLightboxItem();
         });
-
-        /* Keyboard navigation */
         document.addEventListener('keydown', e => {
             if (!document.getElementById('lightbox').classList.contains('open')) return;
             if (e.key === 'Escape') closeLightbox();
@@ -337,8 +387,10 @@
             if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % currentList.length; showLightboxItem(); }
         });
 
-        /* ── Init ── */
-        renderItems('all');
+        /* ══════════════════════════════════════════
+           INIT
+        ══════════════════════════════════════════ */
+        fetchGallery('all');
     </script>
 
 </body>
