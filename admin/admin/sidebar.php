@@ -27,7 +27,7 @@ function isActive(string $page, string $current): string {
     <a href="change_password.php" class="<?= isActive('change_password.php',$current) ?>">
       <i class="fas fa-key"></i> Change Password
     </a>
-    <a href="https://joginathmahasabha.in/gallery.html" target="_blank">
+    <a href="../gallery.html" target="_blank">
       <i class="fas fa-external-link-alt"></i> View Gallery
     </a>
   </nav>
